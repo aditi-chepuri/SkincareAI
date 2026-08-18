@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | SkincareAI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">🍁 SkincareAI</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('analyze') }}">Analyze</a></li>
+            <li><a href="{{ url_for('products') }}">Products</a></li>
+            <li><a href="{{ url_for('contact') }}" class="active">Contact</a></li>
+        </ul>
+        <div class="nav-buttons">
+            {% if session.get('user') %}
+                <a href="{{ url_for('logout') }}" class="btn-outline">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn-outline">Login</a>
+                <a href="{{ url_for('signup') }}" class="btn-primary">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="premium-hero">
+    <div class="premium-hero-content">
+        <span class="premium-eyebrow">✦ GET IN TOUCH</span>
+        <h1>Contact <span>SkincareAI</span></h1>
+        <p>Have a question or need help? We're here for you.</p>
+    </div>
+</section>
+
+<!-- CONTACT CARDS -->
+<section class="premium-section">
+    <div class="premium-grid">
+
+        <div class="premium-card">
+            <div class="premium-card-icon">📧</div>
+            <h3>Email</h3>
+            <p>support@skincareai.com</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-card-icon">🕒</div>
+            <h3>Support Hours</h3>
+            <p>Monday - Saturday<br>9:00 AM - 6:00 PM</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-card-icon">🤖</div>
+            <h3>AI Assistance</h3>
+            <p>24/7 AI Skin Analysis Available</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- CONTACT FORM -->
+
+<section class="form-container">
+
+    <h2>Send Us a Message</h2>
+{% if success %}
+<div class="contact-message success">
+    ✓ {{ success }}
+</div>
+{% endif %}
+
+{% if error %}
+<div class="contact-message error">
+    ✕ {{ error }}
+</div>
+{% endif %}
+    <form method="POST" action="{{url_for('contact')}}">
+
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="Enter your email address" required>
+        </div>
+
+        <div class="form-group">
+            <label>Subject</label>
+            <input type="text" name="subject" placeholder="Enter the subject" required>
+        </div>
+        
+
+        <div class="form-group">
+            <label>Message</label>
+            <textarea rows="6" name="message" placeholder="Write your message here..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;">Send Message</button>
+
+    </form>
+
+</section>
+
+<!-- FAQ -->
+<section class="premium-section">
+    <div class="premium-section-heading">
+       
+        <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="premium-grid">
+
+        <div class="premium-card">
+            <h3>Is my image secure?</h3>
+            <p>Yes. Images are processed only for analysis and are not shared with third parties.</p>
+        </div>
+
+        <div class="premium-card">
+            <h3>How long does analysis take?</h3>
+            <p>Most facial skin analyses are completed within a few seconds.</p>
+        </div>
+
+        <div class="premium-card">
+            <h3>Can I upload an image?</h3>
+            <p>Yes. You can either use the live camera or upload a facial image for analysis.</p>
+        </div>
+
+    </div>
+</section>
+
+<footer class="premium-footer">
+    <p>© 2026 SkincareAI | AI-Powered Skincare Recommendation System</p>
+</footer>
+
+</body>
+</html>

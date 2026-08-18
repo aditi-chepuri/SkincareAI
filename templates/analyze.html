@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Skin Analysis | SkincareAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🍁 SkincareAI
+    </div>
+
+
+    <ul class="nav-links">
+
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('analyze') }}" class="active">Analyze</a></li>
+        <li><a href="{{ url_for('products') }}">Products</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+
+    </ul>
+
+
+    <div class="nav-buttons">
+
+        {% if session.get('user') %}
+            <a href="{{ url_for('logout') }}" class="btn-outline">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="btn-outline">Login</a>
+            <a href="{{ url_for('signup') }}" class="btn-primary">Sign Up</a>
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     ANALYSIS HEADER (premium)
+===================================================== -->
+
+<section class="premium-hero">
+    <div class="premium-hero-content">
+        <span class="premium-eyebrow">✦ AI SKIN INSIGHT</span>
+        <h1>AI Facial <span>Skin Analysis</span></h1>
+        <p>
+            Analyze your skin using our advanced Artificial Intelligence facial analysis system.
+            Capture your face using the live camera or upload a facial image to receive
+            personalized skincare recommendations.
+        </p>
+    </div>
+</section>
+
+
+
+<!-- =====================================================
+     MODE SELECTION (kept original — functional)
+===================================================== -->
+
+<section class="mode-selection">
+
+    <div class="mode-card active" id="cameraMode">
+        <div class="mode-icon">📷</div>
+        <h3>Live Camera</h3>
+        <p>Capture your face in real time.</p>
+    </div>
+
+
+    <div class="mode-card" id="uploadMode">
+        <div class="mode-icon">🖼️</div>
+        <h3>Upload Image</h3>
+        <p>Analyze an existing facial image.</p>
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CAMERA SECTION (kept original — functional)
+===================================================== -->
+
+<section class="scanner-container" id="cameraSection">
+
+    <h2>Live AI Scanner</h2>
+
+    <br>
+
+    <div class="face-box">
+
+        <video id="camera" autoplay playsinline muted></video>
+
+        <p id="cameraStatus">
+            🟢 Camera Ready
+            <br><br>
+            Position your face inside the frame.
+        </p>
+
+        <div class="face-overlay">
+            <div class="center-circle"></div>
+            <div class="scan-grid"></div>
+            <div class="scan-line"></div>
+
+            <div class="scanner-corners">
+                <span class="corner tl"></span>
+                <span class="corner tr"></span>
+                <span class="corner bl"></span>
+                <span class="corner br"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="countdown"></div>
+
+    <canvas id="snapshot" style="display:none;"></canvas>
+
+    <div class="camera-buttons">
+        <button type="button" id="captureBtn" class="scan-btn">📸 Capture Face</button>
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     UPLOAD SECTION (kept original — functional)
+===================================================== -->
+
+<section class="scanner-container" id="uploadSection" style="display:none;">
+
+    <h2>Upload Facial Image</h2>
+
+    <br>
+
+    <label for="imageInput" class="upload-area" id="uploadArea">
+        <div class="upload-icon">📁</div>
+        <h3>Choose an Image</h3>
+        <p>Click here to choose a facial image</p>
+    </label>
+
+    <input type="file" id="imageInput" name="image" accept="image/jpeg,image/jpg,image/png" hidden>
+
+    <div id="previewContainer" style="display:none;">
+        <img id="previewImage" alt="Selected facial image">
+        <p class="preview-text">✔ Image Ready for AI Analysis</p>
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ANALYSIS FORM (kept original — functional)
+===================================================== -->
+
+<form id="analysisForm" action="{{ url_for('result') }}" method="POST">
+
+    <input type="hidden" id="capturedImage" name="capturedImage">
+
+    <div class="analysis-actions">
+        <center>
+            <button type="submit" id="analyzeBtn" class="scan-btn" disabled>
+                🤖 Start AI Analysis
+            </button>
+        </center>
+    </div>
+
+</form>
+
+
+
+<!-- =====================================================
+     LOADING SECTION (kept original — functional)
+===================================================== -->
+
+<section class="loading-section" id="loadingSection" style="display:none;">
+
+    <center>
+        <h2>AI Analysis in Progress</h2>
+    </center>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <h3 id="progressText">Initializing AI Engine...</h3>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER (premium)
+===================================================== -->
+
+<footer class="premium-footer">
+    <p>© 2026 SkincareAI | AI Powered Facial Skin Analysis System</p>
+</footer>
+
+
+
+<!-- =====================================================
+     ANALYZE JAVASCRIPT
+===================================================== -->
+
+<script src="{{ url_for('static', filename='analyze.js') }}"></script>
+
+
+</body>
+
+</html>

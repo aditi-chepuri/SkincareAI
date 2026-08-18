@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Result | SkincareAI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">🍁 SkincareAI</div>
+    <ul class="nav-links">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('analyze') }}">Analyze</a></li>
+        <li><a href="{{ url_for('products') }}">Products</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+</nav>
+
+{% if error %}
+
+<section class="premium-hero">
+    <div class="premium-hero-content">
+        <span class="premium-eyebrow">✦ AI SKIN INSIGHT</span>
+        <h1>Something Went Wrong</h1>
+        <p>{{ error }}</p>
+        <a href="{{ url_for('analyze') }}" class="premium-btn">Go to Analyzer</a>
+    </div>
+</section>
+
+{% else %}
+
+<!-- HERO — split heading + confidence pill -->
+<section class="premium-hero">
+    <div class="premium-hero-content">
+        <span class="premium-eyebrow">✦ AI SKIN INSIGHT</span>
+        <h1 class="result-hero-heading">{{ skin_type|title }} Skin</h1>
+        <div class="confidence-pill">
+            🎯 AI CONFIDENCE <strong>{{ confidence }}%</strong>
+        </div>
+        <p style="margin-top:20px;">Welcome, <strong>{{ session['user'].split('@')[0].title() }}</strong> 👋 — here's your personalized skincare profile.</p>
+    </div>
+</section>
+
+<!-- SUMMARY -->
+<section class="premium-section" style="padding-bottom:10px;">
+    <div class="premium-card" style="max-width:700px; margin:auto; text-align:center;">
+        <p>
+            Based on your uploaded facial image, our Artificial Intelligence model predicts that
+            your skin type is <strong>{{ skin_type|title }}</strong>. The following products and
+            routines have been selected specifically for your skin profile to help maintain
+            healthy and glowing skin.
+        </p>
+    </div>
+</section>
+
+<!-- PRODUCTS — featured, most prominent section -->
+<section class="premium-section">
+    <div class="premium-section-heading">
+        
+        <h2>Recommended Products</h2>
+    </div>
+    <div class="featured-grid">
+        {% for item in products %}
+        <div class="featured-card">
+            <div class="featured-card-icon">🧴</div>
+            <h3>{{ item }}</h3>
+            <p>Selected to complement your {{ skin_type|lower }} skin profile.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ROUTINE — morning/night split with distinct color treatment -->
+<section class="premium-section">
+    <div class="premium-section-heading">
+        
+        <h2>A Simple Ritual for Your Skin</h2>
+    </div>
+    <div class="routine-split">
+
+        <div class="routine-card-alt morning">
+            <h3>☀️ Morning</h3>
+            <ol>
+                {% for item in morning %}
+                <li>{{ loop.index }}. {{ item }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <div class="routine-card-alt night">
+            <h3>🌙 Night</h3>
+            <ol>
+                {% for item in night %}
+                <li>{{ loop.index }}. {{ item }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+
+    </div>
+</section>
+
+<!-- BENEFITS — simple list, less heavy than product cards -->
+<section class="premium-section">
+    <div class="premium-section-heading">
+        
+        <h2>Key Benefits for Your Skin</h2>
+    </div>
+    <div class="simple-list">
+        {% for item in benefits %}
+        <div class="simple-list-item">
+            <span class="icon-check">✓</span> {{ item }}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- TIPS — simple list -->
+<section class="premium-section">
+    <div class="premium-section-heading">
+       
+        <h2>Small Habits, Better Skin Days</h2>
+    </div>
+    <div class="simple-list">
+        {% for item in tips %}
+        <div class="simple-list-item">
+            <span class="icon-check">✓</span> {{ item }}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- AVOID — red-tinted, visually distinct warning section -->
+<section class="premium-section">
+    <div class="premium-section-heading">
+        
+        <h2>A Little Less Can Sometimes Be More</h2>
+    </div>
+    <div class="avoid-list">
+        {% for item in avoid_list %}
+        <div class="avoid-list-item">
+            <span class="icon-x">✕</span> {{ item }}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- NEXT SCAN CTA -->
+<section class="premium-cta">
+    <h2>Ready for Your Next Skin Check?</h2>
+    <p>Your skin changes over time. Re-analyze periodically to keep your routine aligned with your needs.</p>
+    <a href="{{ url_for('analyze') }}" class="premium-btn">Analyze Again</a>
+</section>
+
+<div style="max-width:800px; margin:0 auto 50px; padding:0 20px; text-align:center; color:#64748b; font-size:13px;">
+    ⚠ This AI analysis is intended for educational purposes and provides skincare recommendations
+    based on visible facial features. For serious skin conditions, consult a qualified dermatologist.
+</div>
+
+{% endif %}
+
+<footer class="premium-footer">
+    <p>© 2026 SkincareAI | AI-powered skincare insights</p>
+</footer>
+
+</body>
+</html>

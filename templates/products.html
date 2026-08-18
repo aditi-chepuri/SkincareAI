@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products | SkincareAI</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">🍁 SkincareAI</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('analyze') }}">Analyze</a></li>
+            <li><a href="{{ url_for('products') }}" class="active">Products</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+        <div class="nav-buttons">
+            {% if session.get('user') %}
+                <a href="{{ url_for('logout') }}" class="btn-outline">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn-outline">Login</a>
+                <a href="{{ url_for('signup') }}" class="btn-primary">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="premium-hero">
+    <div class="premium-hero-content">
+        <span class="premium-eyebrow">✦ CURATED FOR YOU</span>
+        <h1>Skincare, <span>Matched to You.</span></h1>
+        <p>Explore the essential skincare categories our AI uses to build your personalized routine.</p>
+    </div>
+</section>
+
+<!-- PRODUCT CATEGORIES -->
+<section class="premium-section">
+    <div class="premium-section-heading">
+       
+        <h2>Essential Skincare Categories</h2>
+    </div>
+    <div class="premium-grid">
+
+        <div class="premium-card">
+            <div class="premium-card-icon">🧼</div>
+            <h3>Cleanser</h3>
+            <p>Removes dirt, excess oil, makeup, and impurities while preparing your skin for the next skincare steps.</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-card-icon">💧</div>
+            <h3>Moisturizer</h3>
+            <p>Hydrates the skin, strengthens the skin barrier, and helps maintain long-lasting moisture.</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-card-icon">✨</div>
+            <h3>Treatment Serum</h3>
+            <p>Targets acne, pigmentation, dark spots, fine lines, and other specific skin concerns.</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-card-icon">🌞</div>
+            <h3>Sunscreen</h3>
+            <p>Protects your skin from harmful UV rays and helps prevent premature skin aging.</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-card-icon">🧴</div>
+            <h3>Face Mask</h3>
+            <p>Provides deep cleansing, nourishment, hydration, and improves overall skin texture.</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-card-icon">🌙</div>
+            <h3>Night Care</h3>
+            <p>Supports overnight skin repair and nourishment for healthier and refreshed skin.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- HOW AI RECOMMENDS -->
+<section class="premium-section">
+    <div class="premium-section-heading">
+        
+        <h2>How Our AI Recommends Products</h2>
+    </div>
+    <div class="premium-grid">
+
+        <div class="premium-card">
+            <div class="premium-card-icon">1</div>
+            <h3>Facial Scan</h3>
+            <p>Capture or upload your facial image.</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-card-icon">2</div>
+            <h3>AI Skin Analysis</h3>
+            <p>AI identifies your skin type and analyzes visible skin characteristics.</p>
+        </div>
+
+        <div class="premium-card">
+            <div class="premium-card-icon">3</div>
+            <h3>Product Matching</h3>
+            <p>The system matches skincare products suitable for your predicted skin type.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="premium-cta">
+    <h2>Find the Right Products for Your Skin</h2>
+    <p>Upload your facial image or use the live camera to let SkincareAI analyze your skin and recommend products specifically selected for your needs.</p>
+    <a href="{{ url_for('analyze') }}" class="premium-btn">Analyze My Skin</a>
+</section>
+
+<footer class="premium-footer">
+    <p>© 2026 SkincareAI | AI-Powered Skincare Recommendation System</p>
+</footer>
+
+</body>
+</html>
