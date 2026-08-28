@@ -20,7 +20,7 @@ from tensorflow.keras.applications.efficientnet import preprocess_input  # type:
 
 app = Flask(__name__)
 
-app.secret_key = "skincare_ai_secret"
+app.secret_key = os.environ.get("SECRET_KEY", "skincare_ai_secret")
 
 
 # =========================================================
