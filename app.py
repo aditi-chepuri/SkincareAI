@@ -9,7 +9,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 import mysql.connector
 
-from tensorflow.keras.models import load_model  # type: ignore
+import tensorflow as tf
+from tensorflow.keras.models import load_model # type: ignore
 from tensorflow.keras.utils import load_img, img_to_array  # type: ignore
 from tensorflow.keras.applications.efficientnet import preprocess_input  # type: ignore
 
@@ -30,8 +31,11 @@ app.secret_key = os.environ.get("SECRET_KEY", "skincare_ai_secret")
 MODEL_PATH = "skin_model_efficientnet.h5"
 CLASS_NAMES_PATH = "class_names_efficientnet.txt"
 
-model = load_model(MODEL_PATH)
+# Reduce TensorFlow memory usage on Render
+tf.config.threading.set_intra_op_parallelism_threads(1)
+tf.config.threading.set_inter_op_parallelism_threads(1)
 
+model = load_model(MODEL_PATH, compile=False)
 with open(CLASS_NAMES_PATH, "r") as f:
     class_names = [line.strip() for line in f if line.strip()]
 
@@ -391,12 +395,8 @@ def result():
     try:
 
         print("Running AI prediction...")
-
-        prediction = model.predict(
-            img_array,
-            verbose=0
-        )
-
+        prediction = model(img_array, training=False).numpy()
+       
         print("Prediction:", prediction)
 
         predicted_index = int(
